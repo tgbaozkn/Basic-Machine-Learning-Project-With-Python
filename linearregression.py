@@ -1,7 +1,7 @@
 #1. kutuphaneler
-import numpy as np
-import matplotlib.pyplot as plt
-import pandas as pd
+import numpy as np #sayisal islemler icin
+import matplotlib.pyplot as plt #grafik icin
+import pandas as pd #dosya islemleri
 
 #2. Veri Onisleme
 
