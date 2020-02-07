@@ -70,6 +70,7 @@ print(accuracy_score(y_test, y_predict))
 
 #grafikte de uyumunu gormek icin : 
 
-plt.plot(y_test,color='black')
-plt.plot(y_predict,color='red')
+plt.xlabel('Red:Prediction , Black:Origial Values')
+plt.plot(y_test,color='black',linewidth=6.0)
+plt.plot(y_predict,color='r')
 plt.show()
