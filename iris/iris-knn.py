@@ -5,7 +5,6 @@ Created on Thu Feb 6 2020
 @author: Tugba Ozkan
 """
 import numpy as np #sayisal islemler icin kullanilir
-import matplotlib.pyplot as plt
 import pandas as pd  #xls,csv gibi dosyalari okumak ve islem yapmak icin kullanilir
 
 from mpl_toolkits.mplot3d import Axes3D #3 boyutlu graphic cizmek icin 
