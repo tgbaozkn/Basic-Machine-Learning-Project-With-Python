@@ -6,6 +6,7 @@ Created on Thu Feb 6 2020
 """
 import numpy as np #sayisal islemler icin kullanilir
 import pandas as pd  #xls,csv gibi dosyalari okumak ve islem yapmak icin kullanilir
+import matplotlib.pyplot as plt #grafik cizmek icin 
 
 from mpl_toolkits.mplot3d import Axes3D #3 boyutlu graphic cizmek icin 
 
@@ -66,3 +67,9 @@ y_predict= knc.predict(X_test)
 #♣dogruluk degerini gormek istiyorsak bu kodu kullanabiliriz 
 from sklearn.metrics import accuracy_score
 print(accuracy_score(y_test, y_predict))
+
+#grafikte de uyumunu gormek icin : 
+
+plt.plot(y_test,color='black')
+plt.plot(y_predict,color='red')
+plt.show()
