@@ -7,7 +7,7 @@ Created on Feb 2020
 
 import numpy as np 
 import pandas as pd 
-import seaborn as sns 
+
 
 x= pd.read_csv('Test.csv')
 y= pd.read_csv('Train.csv')
