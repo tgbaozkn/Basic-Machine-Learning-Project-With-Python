@@ -1,4 +1,4 @@
-Original Text about The prediction 
+Original Text about The prediction\
 &nbsp;
   "
 According to the information provided, Bigmart is a big supermarket chain, with stores all around the country and its current board set out
@@ -8,7 +8,7 @@ According to the information provided, Bigmart is a big supermarket chain, with 
  to ensure success of their business.
   "
   &nbsp;
-Türkçesi 
+Türkçesi \
 "
 Verilen bilgilere göre, BigMart ülkenin etrafındaki şubeleriyle büyük bir mağazalar zinciri ve Bu mağazanın mevcut yönetim kurulu dışarıdaki
 tüm Veri Bilimcilere yeni bir model yaratmada yardım etmek için her mağaza için ürün başına satış oranlarının tahmin edilebilirliğine dair 
