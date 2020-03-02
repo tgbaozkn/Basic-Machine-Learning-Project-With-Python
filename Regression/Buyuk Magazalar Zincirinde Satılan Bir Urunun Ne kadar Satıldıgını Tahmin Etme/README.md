@@ -8,7 +8,7 @@ bir yarışma düzenledi.Bu mağaza 2013 yılında farklı şehirlerdeki 10 mağ
 bilgilerle, satışlarında kilit rol oynayan mağazaları ve ürünleri tespit edebilmeyi ve bu bilgiyle doğru istatistikler sonucunda işlerindeki
 başarıyı garantilemek amacıya kullanabilmeyi umdular."\
 Bu dosyada tahmin için eğitilecek train veri dosyası ve test edilecek test veri dosyası vardır.\
-Tahmin yapılacak part Item_Outlet_Sales(Ürün Satışları) kısmıdır.\
+Tahmin yapılacak part Item_Outlet_Sales(Ürün Satışları) kısmıdır.
 
 Original Text about The prediction\
 &nbsp;
