@@ -155,3 +155,27 @@ lr_accuracy = round(lr.score(X_train,Y_train) * 100,8)
 print('Accuracy: (%)')
 print(lr_accuracy)
 #0.56 ile basladigi icin yuzdesel oranını gormek amacıyla *100 yazdık, 8 ise virgulden sonraki gormek istediginiz kadar girebileceginiz rakamdır.
+
+'''
+Gordugunuz uzere Çokllu Dogrusal Regresyon ile dogruluk sadece yuzde 50 cikti.
+Baska prediction yontemleriyle neler cikabilecegine bakalim.
+Decision Tree yontemi: 
+Genellikle classification kısmında kullanilir fakat regresyonda da iyi sonuclar verir 
+isleyisi su sekildediler train verilerinden su sekilde ogrenir : 
+    ornegin boyu kilosu verilen insanların yaslarini tahmin etmek gorevi olsun ,
+    oncelikle verileri boler ve ortalamalarını alır yani mesele boyu 1.70 üstü ve altı olanlar boyu 1.70
+    altında olup kilosu 50 altında olanlar ve olmayanlar bunların ortalaması vs vs gibi kısımlara boler.
+    1.80 boyunda ve kilosu 80 olan birinin ortalamasına gore yasini tahmin eder.
+daha fazla bilgi ve ornekler icin : 
+https://scikit-learn.org/stable/modules/tree.html#tree    
+'''
+from sklearn.tree import DecisionTreeRegressor
+dt = DecisionTreeRegressor(max_depth=15,min_samples_leaf=300)
+dt.fit(X_train, Y_train)
+#max_depth orneklerin kontenjanını kasteder,ne kadar fazla olursa bolunen sayilarin dogrulugu daha iyi olur ve sample leaf ornekleme sayisi ,belli bir ozellige gore partlara ayirip ortalama alma
+#dt.fit :predict datası, x ve y ye gore baglantiyi ogrenip kendini egitiyor
+tahmin=dt.predict(X_test)
+dt_accuracy= round(dt.score(X_train,Y_train)*100,8)
+print("Decision Tree Accuracy (%): ")
+print(dt_accuracy)
+#%58.84050822
