@@ -6,9 +6,11 @@ Created on Feb 2020
 """
 
 import numpy as np 
+#numpy kütüphanesini sayısal işlemler için kullaniliriz;örn. array(dizi) oluşturmak gibi.
 import pandas as pd 
+#dosyaya dair işlemler(okuma,yazma,bölme,birleştirme vs.) için bu kütüphane kullanilir.
 
-
+#dosyalar pandas kutuphanesiyle okunuyor:
 x= pd.read_csv('Test.csv')
 y= pd.read_csv('Train.csv')
 #tek bir dosyada kombine etmek
@@ -18,25 +20,37 @@ data = pd.concat([y,x],ignore_index= True)
 #concat eklemek birlestirmek baglanti kurmak demektir 
 #pandas concat ile ilgili daha fazla bilgi icin : 
 #https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.concat.html
+#ignore index= indexlemeyi yok say niye boyle yaptık indexlemek o kadar onem arzetmedigi icin
 
 
 print(y.shape, x.shape, data.shape) 
 #shape kaç satır ve kaç sutun oldugunu gosterir
 a=data.head()
 data.head()
- #nesnede ilk n tane verinin dondurulmesi 
-#default degeri 5 tir 0 dan 5 e kadar olan veriler doğrulugu kontrol etmek acisindan gösterilir
+ #.head () komutu : nesnede ilk n tane verinin dondurulmesi 
+#.head() komutunun parantez iiçindeki bolsuk:default degeri 5 tir 0 dan 5 e kadar olan veriler doğrulugu kontrol etmek acisindan gösterilir
 data.describe()
 b=data.describe()
 #verilerin kac tane oldugu ortalamsı ,min degeri max deger; istatiksel tanımı 
 c=data.apply(lambda z: sum(z.isnull()))
 data.apply(lambda z: sum(z.isnull()))
-#eksik satır saysını saymanın en iyi yolu 
+
+''
+bu dosyalari incelersek satırlarda ve sutunlarda eksik veriler "nan" oldugunu goruruz bu da tahmin ederken yanlıs tahminlere ,
+veriler eğitilirken(train kısmı) ,işlenirken yanlış bağlantı kurulmasına yol açar eksik ve fazla olan şeyler hiçbir zaman 
+iyi değildir.
+''
+#eksik satır saysını saymanın en iyi yolu : apply(lambda z: sum(z.isnull())) 
+#bir z tanimla ve bu z ile sutunu satırlari dondur bos mu degil mi: bos olanlarin sayisini belirt
 #sum topla demek isnull bos ise demek lambda=definition
-#lambda fonk tanimlaka gibi
+#lambda fonk tanimlamak gibi
 data.Item_Outlet_Sales = data.Item_Outlet_Sales.fillna(data.Item_Outlet_Sales.mean())
 data.Item_Weight = data.Item_Weight.fillna(data.Item_Weight.mean())
-#bosluklari doldurmak icin bu kalıppları kullandık
+#bosluklari doldurmak icin bu kalıpları kullandık
+''
+yukaridaki kodlari turkce aciklayacak olursak:
+data.dosyasinin_icinden_su_sutunu_al= bu_sutunu .doldur(data.dosyasinin_bu_sutunundaki_verilerin.ortalaması ile())
+''
 #o sutunun ortalama degerine gore degerler atadı 
 #dafa fazla bilgi icin : 
 #https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.fillna.html
@@ -44,31 +58,40 @@ data.Item_Weight = data.Item_Weight.fillna(data.Item_Weight.mean())
 print(data['Outlet_Size'].value_counts())
 #outlet size sutunundaki verilerin türlerinden kac tane oldugunu sayip gosterir
 data.Outlet_Size = data.Outlet_Size.fillna('Medium')
-t=data.Outlet_Size
 #outlet size bosluklarini medium olarak doldur bolumundeki bosluklari doldur fillna=fillnan fill=doldurmak nan=bosluk
+#fillna(parantez icine ne yazarsaniz onunla doldurmus olursunuz : string ifadeyse " veya ' ile yazmaniz gerekir)
+t=data.Outlet_Size
+
+#t dosyasi ile Outlet Size bosluklari medium ile dolmus mu dolmamis mi onu kontrol ettim.
  
-print(data.Outlet_Size)
 #tekrar bos olanları kontrol edelim 
 o=data.apply(lambda z: sum(z.isnull()))
 print(o)
 print(data.info())
-#dataula ilgili bilgilerhangi datada kac tane float var gibi
+#data.info = datayla ilgili bilgilerhangi datada kac tane float var gibi
 g=data['Item_Identifier'].value_counts()
 f=data['Item_Type_Combined'] = data['Item_Identifier'].apply(lambda x: x[0:2])
 h=data['Item_Type_Combined'] = data['Item_Type_Combined'].map({'FD':'Food',
                                                              'NC':'Non-Consumable',
                                                              'DR':'Drinks'})
-cc=data['Item_Type_Combined'].value_counts()
-print(cc)
+
 '''
+g dosyasinda Item kimliklerinden hangisinden kac tane oldugu gosterir 
+Identifier ile Type Combined neredeyse aynı anlama geldigi icin (FD54=Food ,DR54=Drink gibi ) birbirine esitlendi ve sadece
+identifierin ilk iki harfi alındı x[0:2] bu anlama gelir : FD,DR,NC geriye kalan sayisal karmasik ifadeler atildi.
+H dosyasi bu ifadelerin atilmis halidir.
+F dosyasi da bu donguye(lambda x:x[0:2]) sahiplik yapan dosyadir.
 yiyecek mi icecek mi gibi turlerin hangisinden kac tane oldugunu anlamak icin
 oncelikle item combined ile item identifier nerdeyse aynı anlama geliyor basit bir
 hale indirgemek amacıyla aynı degerler birbirlerine esitlendi ve kisaltmalar verildi 
 en sonunda bu kısaltmalara karsilik gelen combinelerden kac tane oldugu gosterildi 
-i bunun ornek dosyasıdır
+cc bunun ornek dosyasıdır
 
 ''' 
+cc=data['Item_Type_Combined'].value_counts()
+print(cc)
 '''
+value.counts ile hangi type dan ne kadar var gorebiliriz :object mi int mi float mi string mi 
 Oncelikle info attigimiz kisimda objectler ve floatlar gorundu
 ve makine diline gore bazilarını basite indirgememiz gerekiyor 
 data dosyasina bakacak olursak bunların hangisi olması gerektigine dair
@@ -91,14 +114,16 @@ from sklearn.preprocessing import LabelEncoder
 lb= LabelEncoder()
 #simdi outlet degerlerimizi egitip donusturelim : fit-transform
 data['Outlet']= lb.fit_transform(data['Outlet_Identifier'])
+#label encodere göre outlet identifier stununu eğit ve donustur neye : data outlet arrayine.
 var_mod= ['Item_Fat_Content','Outlet_Location_Type','Outlet_Size','Item_Type_Combined','Outlet_Type','Outlet']
 for i in var_mod:
     data[i]= lb.fit_transform(data[i])
     print(data [i])
 son_hal=data
-#burada sunu yaptik outlet identirifer datalarini egitip degistirp outlet dosyasina aktardık 
+#burada sunu yaptik outlet identirifer datalarini egitip degistirip outlet dosyasina aktardık 
     #var_mod kisaktmasiyla sayisallastirmak istedigimiz belgeleri siraladik 
     #for dongusuyla tek tek hepsinin 14204 satirdaki degerlerin sayisal verilere gore kodlanisini yaptik 
+  --i var_mod dizisindeki tüm elemanlarda donsun ve label encodere gore eğitilip donusturulsun --
 son_hal = pd.get_dummies(son_hal, columns=['Item_Fat_Content','Outlet_Location_Type','Outlet_Size','Outlet_Type','Item_Type_Combined','Outlet'])
 #get dummies birbirne benzeyen degiskenleri tek sınıfa indirgemek icin kullanilir ornek verecek olursak yas ve dogum yili gibi ikisini tek bir degere indirger 
 #dummies bu vakalar icin kullanilan bir terimdir machine learningte
@@ -117,15 +142,15 @@ y.drop(['source'],axis=1,inplace=True)
 #gerekli olmayanlari kaldirdik 
 '''
 Eger en son hali csv dosyasi olarak gormek istiyorsak su komutlari kullanabiliriz : 
-    y.to_csv("train_modified.csv",index=False)
+    y.to_csv("train_modified.csv",index=False)  burada da calistigimiz klasörün icine bu dosyalari yazdirir ve sonra,
     x.to_csv("test_modified.csv",index=False)
-ve bunlari tekrar okutmak icin de 
-train2 = pd.read_csv("train_modified.csv")
+***************
+train2 = pd.read_csv("train_modified.csv") pandas ile okuyabiliriz bu dosyalari.
 test2 = pd.read_csv("test_modified.csv")
 bu komutlari kullanabiliriz 
 '''
 print(y.head())
-#verilerin dogrulugunu check ettik 
+#verilerin dogrulugunu check ettik head komutu ile ilk beş ifadeyi gorerek
 #verilerin sutunlarina baktigimizda yine fazlalik yapan bilgiler var 
 #item kimlikleri(identifier) farklı kodlamalar icermekte ve cok fazla one hot yapılamayacak adar bu yuzden kaldırılmalı
 #outlet kimlikleri de ayni sekilde oldugu icin drop edilmeli 
