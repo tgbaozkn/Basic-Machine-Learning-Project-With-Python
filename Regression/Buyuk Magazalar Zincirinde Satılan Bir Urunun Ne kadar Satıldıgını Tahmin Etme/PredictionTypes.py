@@ -179,3 +179,31 @@ dt_accuracy= round(dt.score(X_train,Y_train)*100,8)
 print("Decision Tree Accuracy (%): ")
 print(dt_accuracy)
 #%58.84050822
+'''
+Çok fazla veri oldugu icin dogruluk sayisi da cok iyi cikmiyor
+ve decision tree ezbere gidiyor yani belli aralıktaki deger sabittir 
+farklı veri farklı degere gelse de ezbere gittigi icin bilemiyor. 
+Bir de Random Forest(Rassal Agaclar) tahminini deneyelim : 
+    Birden fazla decision treenin tahmin etmek icin bir araya gelmesidir 
+    İyi bir dogruluk almak icin birden fazla Decision Tree lerin birleşmesi;
+    her parçayı tekrar kucuk parcalara bolup onların ortalamasını almasıdır.
+    cok verilerde kullanilmasi daha iyidir.ensemble öğrenme yani kollektif öğrenme olarak geçer.
+    birden fazla decision treedan olusan anlamına gelir.
+    daha fazla bilgi icin : 
+    https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestRegressor.html
+        
+'''
+
+from sklearn.ensemble import RandomForestRegressor 
+rfr= RandomForestRegressor(n_estimators=250,max_depth=6, min_samples_leaf=150,n_jobs=4)
+#n_estimators : ne kadar decision tree kullanilacak
+#ornekleme kontenjanı =max_depth
+#ornekleme sayisi= min_samples_leaf
+#☺n_jobs : paralel calisan is sayisi ;fit ederken ,predict yaparken ,agaclarin hepsini calistirirken vs aynı anda yapilan is sayisi
+rfr.fit(X_train,Y_train)
+tahmin=rfr.predict(X_test)
+#dogruluk oranına bakalim : 
+rfr.accuracy= round(rfr.score(X_train,Y_train)*100,5)
+print( "Random Forest Accuracy (%): ")
+print(rfr.accuracy)
+#♣Yaklasik %60 oranında dogruluk verdi
